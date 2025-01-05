@@ -16,6 +16,7 @@ jobs:
         run: |
           echo "MONGO_CONNECT_STRING=${{ secrets.MONGO_CONNECT_STRING }}" > .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "REDIRECT_URL=${{ secrets.REDIRECT_URL }}" >> .env
 
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
