@@ -1,4 +1,5 @@
 const Contractor = require('./../models/contractorsModel');
+const WorkOrder = require('./../models/workOrderModel');
 
 const getAllContractors = async (req, res) => {
     try {
@@ -52,8 +53,32 @@ const deleteContractor = async (req, res) => {
       }
 }
 
+const getContractorsByLocation = async (req, res) => {
+    try {
+        console.log( req.params);
+        const locationId = req.params.id;
+
+        // Find work orders containing the specified locationId
+        const workOrders = await WorkOrder.find({ "locations.locationId": locationId });
+
+        // Extract unique contractorIds from the work orders
+        const contractorIds = [...new Set(workOrders.map(order => order.contractorId))];
+
+        // Query the Contractor collection to get details of these contractors
+        const contractors = await Contractor.find({ _id: { $in: contractorIds } });
+        console.log(contractors);
+        // Return the list of contractors
+        res.status(200).json(contractors);
+    } catch (err) {
+        console.error('Error fetching contractors:', err);
+        res.status(500).json({ message: 'Internal server error', error: err });
+    }
+};
+
+
 module.exports = {
     getAllContractors,
     addContractor,
-    deleteContractor
+    deleteContractor,
+    getContractorsByLocation
 }

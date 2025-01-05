@@ -2,15 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const billController = require('../controllers/billController');
+const authenticateJWT = require('./../middleware');
 
 
 
 
+router.get('/getAllBills', authenticateJWT,billController.getBills);
 
-router.get('/getAllBills', billController.getBills);
+router.get('/getBillPdf/:id', authenticateJWT,billController.getBillPdf);
 
-router.get('/getBillPdf/:id', billController.getBillPdf);
-
-router.post('/generateBill',billController.generateBillsForAllContractors);
+router.post('/generateBill',authenticateJWT,billController.generateBillsForAllContractors);
 
 module.exports = router;
