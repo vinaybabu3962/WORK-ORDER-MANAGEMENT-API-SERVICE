@@ -40,7 +40,7 @@ const getCompletedWorkOrders = async (contractorId) => {
         return flattenedWorkOrders;
     } catch (error) {
         console.error('Error fetching work orders:', error);
-        throw new Error('Failed to fetch work orders');
+        throw error;
     }
 };
 
@@ -106,7 +106,7 @@ const saveBill = async (contractorId, billNumber, totalAmount, locationDetails) 
         return newBill;
     } catch (error) {
         console.error('Error saving bill:', error);
-        throw new Error('Failed to save bill');
+        throw error;
     }
 };
 
@@ -126,7 +126,7 @@ const generateBillsForAllContractors = async (req, res) => {
         const contractors = await Contractor.find(); 
         
         if (contractors.length === 0) {
-            throw new Error('No contractors found');
+            throw "No contractors found";
         }
 
         
@@ -152,22 +152,26 @@ const generateBillsForAllContractors = async (req, res) => {
                 continue; 
             }
 
-            
-            const { locationDetails, totalAmount } = await calculateLocationAmounts(completedLocations);
+            if(completedLocations.length != 0){
+                const { locationDetails, totalAmount } = await calculateLocationAmounts(completedLocations);
 
             
-            const billNumber = await generateBillNumber();
+                const billNumber = await generateBillNumber();
+    
+                
+                const bill = await saveBill(contractor._id, billNumber, totalAmount, locationDetails);
+
+                console.log(`Bill ${bill.billNumber} generated successfully for contractor: ${contractor.name}`);
+            }
+           
 
             
-            const bill = await saveBill(contractor._id, billNumber, totalAmount, locationDetails);
-
-            console.log(`Bill ${bill.billNumber} generated successfully for contractor: ${contractor.name}`);
             
         }
         res.status(200).json({ message:"alldone" });
     } catch (error) {
         console.error('Error generating bills for all contractors:', error);
-        throw new Error('Failed to generate bills for all contractors');
+        res.status(500).json({ message: 'Failed to generate bills' });
     }
 };
 
