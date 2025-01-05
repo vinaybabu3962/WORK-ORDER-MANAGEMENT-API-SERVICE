@@ -27,10 +27,10 @@ jobs:
       needs: build
       runs-on: self-hosted
       steps:
-        -name: Pull Image from docker hub
+        - name: Pull Image from docker hub
          run : docker pull vinaybabu3962/work-order-management-api-service:latest
-        -name: Delete old container if exists
+        - name: Delete old container if exists
          run : docker rm -f nodejs-app-container
-        -name: Run docker container 
+        - name: Run docker container 
          run : docker run -d -p 3000:3000 -name nodejs-app-container vinaybabu3962/work-order-management-api-service
 
