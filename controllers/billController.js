@@ -49,7 +49,7 @@ const getCompletedWorkOrders = async (contractorId) => {
 
 const getCompletedLocations = (workOrders) => {
     const completedLocations = [];
-
+    console.log("Got locations::");
     // Loop through all the work orders and their locations
     workOrders.forEach(order => {
         console.log(order);
