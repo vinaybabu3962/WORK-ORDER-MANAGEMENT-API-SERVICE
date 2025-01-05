@@ -248,13 +248,15 @@ const generateBillPdf = (billData, res) => {
   
 const getBillPdf = async (req, res) => {
     try {
+        console.log("Imhere::");
       const billId = req.params.id;  
-      
+      console.log(billId);
       
       const billData = await Bill.findById(billId)
         .populate('locations')   
         .populate('contractor', 'name'); 
-    
+      
+      console.log(billData);
       if (!billData) {
         return res.status(404).json({ message: 'Bill not found' });
       }
