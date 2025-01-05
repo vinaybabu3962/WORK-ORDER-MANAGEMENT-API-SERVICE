@@ -22,8 +22,8 @@ app.use(cors({
 
 
 app.use(express.json());
-
-mongoose.connect('mongodb://localhost:27017/mydb', {
+const MONGO_CONNECT_STRING = process.env.MONGO_CONNECT_STRING;
+mongoose.connect(MONGO_CONNECT_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
