@@ -1,5 +1,5 @@
 const WorkOrder = require('./../models/workOrderModel');
-const Contractor = require('../models/contractorsModel');  // Import the Contractor model
+const Contractor = require('../models/contractorsModel');  
 const Location = require('../models/locationModel'); 
 
 
@@ -33,19 +33,19 @@ const addWorkOrder = async (req, res) => {
 
 const getAllWorkOrders = async (req, res) => {
     try {
-        console.log("here");
-        // Fetch all work orders, populate contractor and locations fields
+
+        
         const workOrders = await WorkOrder.find()
-            .populate('contractorId', 'name')  // Populate contractor name (add other fields if needed)
-            .populate('locations.locationId', 'name state')  // Populate location name and state (adjust as necessary)
+            .populate('contractorId', 'name')  
+            .populate('locations.locationId', 'name state')  
             .exec();
-        console.log(JSON.stringify(workOrders));
-        // If no work orders are found
+
+        
         if (!workOrders || workOrders.length === 0) {
             return res.status(404).json({ message: 'No work orders found' });
         }
 
-        // Send the work orders in the response
+        
         return res.status(200).json(workOrders);
     } catch (error) {
         console.error('Error fetching work orders:', error);

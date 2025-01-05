@@ -4,22 +4,22 @@ const workOrderSchema = new mongoose.Schema({
   contractorId: { 
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Contractor', 
-    required: true  // Reference to the Contractor who is associated with the work order
+    required: true  
   },
-  paymentTerms: { type: Number, required: true },  // Payment terms for the work order
-  dueDate: { type: Date, required: true },  // Due date for the work order
-  locations: [  // Array of locations associated with this work order
+  paymentTerms: { type: Number, required: true },  
+  dueDate: { type: Date, required: true },  
+  locations: [  
     {
       locationId: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Location', 
-        required: true  // Reference to the Location
+        required: true  
       },
-      rate: { type: Number, required: true },  // Rate for the specific location in the work order
-      quantity: { type: Number, required: true }  // Quantity for the specific location in the work order
+      rate: { type: Number, required: true },  
+      quantity: { type: Number, required: true }  
     }
   ],
-  createdAt: { type: Date, default: Date.now }  // Timestamp for when the work order is created
+  createdAt: { type: Date, default: Date.now }  
 });
 
 module.exports = mongoose.model('WorkOrder', workOrderSchema);

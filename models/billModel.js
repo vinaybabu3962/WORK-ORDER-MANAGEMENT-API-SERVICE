@@ -10,7 +10,7 @@ const billSchema = new mongoose.Schema({
         name: {type: String},
         rate: { type: Number },
         quantity: { type: Number },
-        totalAmount: { type: Number },  // Calculated as rate * quantity
+        totalAmount: { type: Number },  
     }],
     dateGenerated: { type: Date, default: Date.now },
 });
