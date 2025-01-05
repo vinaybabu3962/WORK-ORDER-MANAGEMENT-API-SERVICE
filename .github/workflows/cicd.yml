@@ -38,3 +38,7 @@ jobs:
 
       - name: Run Docker container
         run: docker run -d -p 3000:3000 --name nodejs-app-container vinaybabu3962/work-order-management-api-service
+      
+      - name: List Docker images
+        run: docker images
+
